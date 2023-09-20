@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +10,60 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header h6 {
+  background-color: magenta;
+
+  text-align: center;
+}
+main {
+  display: grid;
+  place-content: center;
+  /* text-align: center; */
+  /* margin: auto; */
+}
+ul {
+  width: 100%;
+  list-style: none;
+  padding: 0.5rem 0;
+}
+ul li::before {
+  content: "\2000";
+}
+
+.item {
+  padding: 0.25rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #eee;
+}
+.item input[type="checkbox"] {
+  text-align: center;
+  width: 2.5rem;
+  width: 48px;
+  min-width: 48px;
+  height: 2.5rem;
+  height: 48px;
+  min-height: 48px;
+}
+
+.item label {
+  font-size: 1rem;
+  flex-grow: 1;
+}
+
+.item svg {
+  width: 48px;
+  min-width: 48px;
+  height: 16px;
+  font-size: 1rem;
+  color: steelblue;
 }
