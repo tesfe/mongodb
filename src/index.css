@@ -67,3 +67,11 @@ ul li::before {
   font-size: 1rem;
   color: steelblue;
 }
+form {
+  margin-top: 1rem;
+  background-color: #eee;
+  flex-grow: 1;
+}
+form button {
+  padding-right: 0.8rem;
+}
