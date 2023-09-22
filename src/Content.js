@@ -1,13 +1,8 @@
-import React from "react";
 import ListItems from "./ListItems";
 
 const Content = ({ items, handleDelete, handleCheck }) => {
   return (
     <main>
-      <form>
-        <input type="text" />
-        <button type="submit">add</button>
-      </form>
       {items.length ? (
         <ListItems
           items={items}

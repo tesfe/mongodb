@@ -67,11 +67,23 @@ ul li::before {
   font-size: 1rem;
   color: steelblue;
 }
-form {
-  margin-top: 1rem;
-  background-color: #eee;
-  flex-grow: 1;
+.adItem {
+  display: flex;
+
+  justify-content: center;
+  margin: 1rem 0 auto;
 }
-form button {
+.adItem button {
   padding-right: 0.8rem;
+}
+.adItem button:focus,
+.adItem button:hover {
+  background-color: greenyellow;
+}
+.searchItem {
+  display: flex;
+
+  justify-content: center;
+
+  margin: 0.5rem 0 0;
 }
