@@ -13,6 +13,7 @@ function App() {
   const [newItem, setnewItem] = useState("");
 
   const [search, setSearch] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newItem) return;
@@ -52,6 +53,7 @@ function App() {
         items={items.filter((item) =>
           item.item.toLowerCase().includes(search.toLowerCase())
         )}
+        //.includes returns empty string is truthy coz an empty string is substring of any string
         handleCheck={handleCheck}
         handleDelete={handleDelete}
       />
