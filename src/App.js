@@ -3,6 +3,7 @@ import Header from "./Header";
 import AddItem from "./AddItem";
 import SearchItem from "./SearchItem";
 import Content from "./Content";
+import Practice from "./Practice";
 
 import { useState } from "react";
 function App() {
@@ -57,6 +58,7 @@ function App() {
         handleCheck={handleCheck}
         handleDelete={handleDelete}
       />
+      <Practice />
     </div>
   );
 }
