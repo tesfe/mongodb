@@ -5,7 +5,7 @@ import SearchItem from "./SearchItem";
 import Content from "./Content";
 import Practice from "./Practice";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function App() {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("list")) || []
@@ -14,15 +14,17 @@ function App() {
   const [newItem, setnewItem] = useState("");
 
   const [search, setSearch] = useState("");
-
+  //useeffect is promise type which answer later on
+  useEffect(() => {
+    localStorage.setItem("list", JSON.stringify(items));
+  }, [items]);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newItem) return;
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item: newItem };
-    const newlistItem = [...items, myNewItem];
-    setItems(newlistItem);
-    localStorage.setItem("list", JSON.stringify(newlistItem));
+    const listItems = [...items, myNewItem];
+    setItems(listItems);
 
     setnewItem("");
   };
@@ -32,13 +34,11 @@ function App() {
       item.id === id ? { ...item, checked: !item.checked } : item
     );
     setItems(listItems);
-    localStorage.setItem("list", JSON.stringify(listItems));
   };
 
   const handleDelete = (id) => {
     const listItems = items.filter((item) => item.id !== id);
     setItems(listItems);
-    localStorage.setItem("list", JSON.stringify(listItems));
   };
 
   return (
