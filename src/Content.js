@@ -2,7 +2,7 @@ import ListItems from "./ListItems";
 
 const Content = ({ items, handleDelete, handleCheck }) => {
   return (
-    <main>
+    <>
       {items.length ? (
         <ListItems
           items={items}
@@ -12,7 +12,7 @@ const Content = ({ items, handleDelete, handleCheck }) => {
       ) : (
         <p style={{ color: "red" }}>No items are found</p>
       )}
-    </main>
+    </>
   );
 };
 export default Content;

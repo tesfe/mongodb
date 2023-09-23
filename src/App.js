@@ -12,24 +12,28 @@ function App() {
   const [newItem, setnewItem] = useState("");
 
   const [search, setSearch] = useState("");
+  const [fetchError, setfetchError] = useState(null);
   const API_URL = "http://localhost:3500/items";
   //useeffect is promise type which answer later on
   useEffect(() => {
     const fetchedData = async () => {
       try {
         const response = await fetch(API_URL);
+        if (!response.ok) throw Error("did not recieve the expected data");
         const jsonItems = await response.json();
 
         setItems(jsonItems);
+        setfetchError(null);
         console.log(jsonItems);
       } catch (error) {
-        console.log(error.stack);
+        // console.log(error.message)
+        setfetchError(error.message);
       }
     };
 
     //this is called a instnatly invoked function expression(IIFE)
-    // (async () => await fetchedData())();
-    setTimeout(() => fetchedData(), 3000);
+    (async () => await fetchedData())();
+    //setTimeout(() => fetchedData(), 3000);
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,14 +67,19 @@ function App() {
         handleSubmit={handleSubmit}
       />
       <SearchItem search={search} setSearch={setSearch} />
-      <Content
-        items={items.filter((item) =>
-          item.item.toLowerCase().includes(search.toLowerCase())
+      <main>
+        {fetchError && <p style={{ color: "red" }}>{`Error:${fetchError}`}</p>}
+        {!fetchError && (
+          <Content
+            items={items.filter((item) =>
+              item.item.toLowerCase().includes(search.toLowerCase())
+            )}
+            //.includes returns empty string is truthy coz an empty string is substring of any string
+            handleCheck={handleCheck}
+            handleDelete={handleDelete}
+          />
         )}
-        //.includes returns empty string is truthy coz an empty string is substring of any string
-        handleCheck={handleCheck}
-        handleDelete={handleDelete}
-      />
+      </main>
       <Practice />
     </div>
   );
