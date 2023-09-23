@@ -1,0 +1,7 @@
+{
+  "items": [
+    { "id": 1, "checked": false, "item": "first react app" },
+    { "id": 2, "checked": false, "item": "second react app" },
+    { "id": 3, "checked": false, "item": " third react app" }
+  ]
+}

@@ -7,17 +7,30 @@ import Practice from "./Practice";
 
 import { useState, useEffect } from "react";
 function App() {
-  const [items, setItems] = useState(
-    JSON.parse(localStorage.getItem("list")) || []
-  );
-
+  const [items, setItems] = useState([]);
+  // console.log(items);
   const [newItem, setnewItem] = useState("");
 
   const [search, setSearch] = useState("");
+  const API_URL = "http://localhost:3500/items";
   //useeffect is promise type which answer later on
   useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(items));
-  }, [items]);
+    const fetchedData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const jsonItems = await response.json();
+
+        setItems(jsonItems);
+        console.log(jsonItems);
+      } catch (error) {
+        console.log(error.stack);
+      }
+    };
+
+    //this is called a instnatly invoked function expression(IIFE)
+    // (async () => await fetchedData())();
+    setTimeout(() => fetchedData(), 3000);
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!newItem) return;
