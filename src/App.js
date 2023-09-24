@@ -5,7 +5,7 @@ import SearchItem from "./SearchItem";
 import Content from "./Content";
 import Practice from "./Practice";
 import apiRequest from "./apiRequest";
-
+import Practice2 from "./Practice2";
 import { useState, useEffect } from "react";
 //import { type } from "@testing-library/user-event/dist/type";
 function App() {
@@ -83,7 +83,6 @@ function App() {
 
     const postOption = {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
     };
     const url = `${API_URL}/${id}`;
     const result = await apiRequest(url, postOption);
@@ -114,6 +113,7 @@ function App() {
         )}
       </main>
       <Practice />
+      <Practice2 />
     </div>
   );
 }
