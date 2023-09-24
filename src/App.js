@@ -4,8 +4,10 @@ import AddItem from "./AddItem";
 import SearchItem from "./SearchItem";
 import Content from "./Content";
 import Practice from "./Practice";
+import apiRequest from "./apiRequest";
 
 import { useState, useEffect } from "react";
+//import { type } from "@testing-library/user-event/dist/type";
 function App() {
   const [items, setItems] = useState([]);
   // console.log(items);
@@ -13,6 +15,7 @@ function App() {
 
   const [search, setSearch] = useState("");
   const [fetchError, setfetchError] = useState(null);
+  const [isLoading, setisloading] = useState(true);
   const API_URL = "http://localhost:3500/items";
   //useeffect is promise type which answer later on
   useEffect(() => {
@@ -28,34 +31,63 @@ function App() {
       } catch (error) {
         // console.log(error.message)
         setfetchError(error.message);
+      } finally {
+        setisloading(false);
       }
     };
 
     //this is called a instnatly invoked function expression(IIFE)
-    (async () => await fetchedData())();
-    //setTimeout(() => fetchedData(), 3000);
+    // (async () => await fetchedData())();
+    setTimeout(() => fetchedData(), 2000);
   }, []);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newItem) return;
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item: newItem };
     const listItems = [...items, myNewItem];
     setItems(listItems);
-
+    const postOption = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(myNewItem),
+    };
+    const result = await apiRequest(API_URL, postOption);
+    if (result) setfetchError(result);
     setnewItem("");
   };
 
-  const handleCheck = (id) => {
+  const handleCheck = async (id) => {
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
     setItems(listItems);
+
+    const myItem = items.filter((item) => item.id === id);
+    console.log(myItem);
+    const patch = { checked: myItem[0].checked };
+    const postOption = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify(patch),
+    };
+    const url = `${API_URL}/${id}`;
+    const result = await apiRequest(url, postOption);
+    if (result) setfetchError(result);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const listItems = items.filter((item) => item.id !== id);
     setItems(listItems);
+
+    const postOption = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    };
+    const url = `${API_URL}/${id}`;
+    const result = await apiRequest(url, postOption);
+    if (result) setfetchError(result);
   };
 
   return (
@@ -69,7 +101,8 @@ function App() {
       <SearchItem search={search} setSearch={setSearch} />
       <main>
         {fetchError && <p style={{ color: "red" }}>{`Error:${fetchError}`}</p>}
-        {!fetchError && (
+        {!fetchError && isLoading && <p> Loading... </p>}
+        {!fetchError && !isLoading && (
           <Content
             items={items.filter((item) =>
               item.item.toLowerCase().includes(search.toLowerCase())
